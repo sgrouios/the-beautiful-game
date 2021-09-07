@@ -8,12 +8,12 @@ using the_beautiful_game_api.Models;
 
 namespace the_beautiful_game_api.Services
 {
-    public class LatestHighlightsService : ILatestHighlightsService
+    public class HighlightsService : IHighlightsService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly string scoreBatUrl = "https://www.scorebat.com/video-api/v3/";
 
-        public LatestHighlightsService(IHttpClientFactory httpClientFactory)
+        public HighlightsService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -46,6 +46,7 @@ namespace the_beautiful_game_api.Services
                 var responseBody = await response.Content.ReadAsStringAsync();
                 var serializedBody = JsonConvert.DeserializeObject<LatestHighlights>(responseBody);
                 var premierLeagueHighlights = serializedBody.Response.Where(x => x.Competition.Equals(FootballCompetitions.EnglishPremierLeague));
+                
                 return new OkObjectResult(premierLeagueHighlights);
 
             }

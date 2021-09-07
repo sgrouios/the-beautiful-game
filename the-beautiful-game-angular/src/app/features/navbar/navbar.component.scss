@@ -36,8 +36,8 @@ ul {
 @media (max-width: 675px) {
     .flex {
         flex-direction: column;
+        padding-bottom: 1rem;
     }
-
     .nav-item {
         padding-left: 0;
     }

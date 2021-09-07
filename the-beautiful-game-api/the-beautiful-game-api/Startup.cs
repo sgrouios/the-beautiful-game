@@ -21,6 +21,15 @@ namespace the_beautiful_game_api
         {
             services.AddControllers();
             services.AddServices();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(configure =>
+                {
+                    configure.AllowAnyOrigin();
+                    configure.AllowAnyMethod();
+                    configure.AllowAnyHeader();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,7 +40,10 @@ namespace the_beautiful_game_api
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseRouting();
+            
+            app.UseCors();
 
             app.UseAuthorization();
 

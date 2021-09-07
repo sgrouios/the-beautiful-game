@@ -8,25 +8,25 @@ namespace the_beautiful_game_api.Controllers
     [ApiController]
     public class HighlightsController : ControllerBase
     {
-        private readonly ILatestHighlightsService _latestHighlightsService;
+        private readonly IHighlightsService _highlightsService;
 
-        public HighlightsController(ILatestHighlightsService latestHighlightsService)
+        public HighlightsController(IHighlightsService latestHighlightsService)
         {
-            _latestHighlightsService = latestHighlightsService;
+            _highlightsService = latestHighlightsService;
         }
 
         [HttpGet]
         [Route("latest")]
         public async Task<IActionResult> GetLatestHighlights()
         {
-            return await _latestHighlightsService.GetLatestHighlights();
+            return await _highlightsService.GetLatestHighlights();
         }
 
         [HttpGet]
         [Route("latest/premier-league")]
         public async Task<IActionResult> GetLatestPremierLeagueHighlights()
         {
-            return await _latestHighlightsService.GetLatestPremierLeagueHighlights();
+            return await _highlightsService.GetLatestPremierLeagueHighlights();
         }
     }
 }

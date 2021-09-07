@@ -1,0 +1,15 @@
+<main>
+    <div *ngIf="latestHighlights$ | async as highlights">
+        <div *ngFor="let highlight of highlights">
+            <div class="highlight">
+                <div class="text-align match-info">
+                    <h2>{{highlight.competition}}</h2>
+                    <h3>{{highlight.title}}</h3>
+                    <p>{{highlight.date | date:'mediumDate'}}</p>
+                </div>
+                <div class="video" [innerHtml]="highlight.videos[0].embed | noSanitize">
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
