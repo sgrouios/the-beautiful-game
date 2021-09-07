@@ -5,5 +5,9 @@
     <RootNamespace>the_beautiful_game_api</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>

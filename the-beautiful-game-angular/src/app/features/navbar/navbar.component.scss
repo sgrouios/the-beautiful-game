@@ -1,0 +1,44 @@
+header {
+    background: black;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+}
+
+.flex {
+    align-items: center;
+    justify-content: space-around;
+}
+
+.site-title {
+    color: whitesmoke;
+    font-family: 'Oswald', sans-serif;
+}
+
+.nav-item {
+    padding-left: 3rem;
+}
+
+.nav-link {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: rgb(81, 81, 241);
+}
+
+@media (max-width: 675px) {
+    .flex {
+        flex-direction: column;
+    }
+
+    .nav-item {
+        padding-left: 0;
+    }
+}
