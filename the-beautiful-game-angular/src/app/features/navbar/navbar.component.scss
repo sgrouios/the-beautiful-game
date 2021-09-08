@@ -5,6 +5,7 @@ header {
 ul {
     list-style: none;
     margin: 0;
+    padding: 0;
 }
 
 .flex {
@@ -14,6 +15,7 @@ ul {
 
 .site-title {
     color: whitesmoke;
+    cursor: pointer;
     font-family: 'Oswald', sans-serif;
 }
 
