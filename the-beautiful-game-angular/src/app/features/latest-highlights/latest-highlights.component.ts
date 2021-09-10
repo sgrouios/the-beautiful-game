@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, EMPTY, Subject } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { Highlight } from 'src/app/models/highlight';
@@ -9,17 +9,17 @@ import { HighlightsService } from 'src/app/services/highlights.service';
   styleUrls: ['./latest-highlights.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LatestHighlightsComponent implements OnInit {
+export class LatestHighlightsComponent implements AfterViewInit {
 
-  allHighlights: Highlight[] = [];
+  allHighlights!: Highlight[];
   latestHighlightsSelected$: BehaviorSubject<Highlight[]> = new BehaviorSubject<Highlight[]>([]);
-  dates$: BehaviorSubject<Date[]> = new BehaviorSubject<Date[]>([]);
+  dates$: Subject<Date[]> = new Subject();
   dateSelected!: Date;
   allSelected = true;
 
   constructor(private highLightsService: HighlightsService) { }
-
-  ngOnInit(): void {
+  
+  ngAfterViewInit(): void {
     this.highLightsService.getLatestHighlights()
     .pipe(
       catchError((err) => {
@@ -27,13 +27,21 @@ export class LatestHighlightsComponent implements OnInit {
         return EMPTY;
       }),
       tap((highlights) => {
+        // store all highlights in local scope to be able to emit based on search-criteria
         this.allHighlights = highlights;
+        // get all dates by month/day to display
         this.dates$.next(this.getHighlightDates(this.allHighlights));
+        // emit all highlights retrieved - default
         this.latestHighlightsSelected$.next(this.allHighlights);
       })
     ).subscribe();
   }
 
+  /**
+   * Accepts array of highlights - 'highlights' and adds each unique date property to a new array
+   * @param  {Highlight[]} highlights
+   * @returns Date[]
+   */
   getHighlightDates(highlights: Highlight[]): Date[] {
     let dates: Date[] = [];
     highlights.forEach(hl => {

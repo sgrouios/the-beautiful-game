@@ -1,13 +1,13 @@
 <main>
-    <div *ngIf="latestHighlightsSelected$ | async as highlights">
-        <div *ngIf="dates$ | async as dates" class="date-filter-container">
-            <div class="date-filter-btn-container">
-                <button class="date-filter-btn" [ngClass]="{ 'date-selected': allSelected }" (click)="selectAllHighlights()">All</button>
-            </div>
-            <div *ngFor="let date of dates" class="date-filter-btn-container">
-                <button class="date-filter-btn" [ngClass]="{ 'date-selected': date === dateSelected }" (click)="selectDate(date)">{{date | date:'LLL d'}}</button>
-            </div>
+    <div *ngIf="dates$ | async as dates" class="date-filter-container">
+        <div class="date-filter-btn-container">
+            <button class="date-filter-btn" [ngClass]="{ 'date-selected': allSelected }" (click)="selectAllHighlights()">All</button>
         </div>
+        <div *ngFor="let date of dates" class="date-filter-btn-container">
+            <button class="date-filter-btn" [ngClass]="{ 'date-selected': date === dateSelected }" (click)="selectDate(date)">{{date | date:'LLL d'}}</button>
+        </div>
+    </div>
+    <div *ngIf="latestHighlightsSelected$ | async as highlights">
         <div *ngFor="let highlight of highlights">
             <div class="highlight">
                 <div class="text-align match-info">

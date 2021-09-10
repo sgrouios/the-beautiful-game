@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@800&display=swap');
 
+$site-background-col: #1a2e35;
+$highlight-text-col: #34c2b1;
+
 body {
     font-size: 1.125em;
-    background-color: #2C3531;
+    background-color: $site-background-col;
     margin: 0;
 }
 

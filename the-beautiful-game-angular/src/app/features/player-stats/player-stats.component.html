@@ -1,0 +1,75 @@
+<main>
+    <form [formGroup]="playerSearchForm" (keyup.enter)="submitSearch()">
+        <div class="player-search-container" >
+            <input #searchInput class="player-search" type="text" formControlName="playerName" placeholder="Enter player surname">
+            <div *ngIf="(playerResults$ | async) as results">
+                <div *ngIf="results.length !== 0" class="search-result-container">
+                    <div class="search-result" *ngFor="let player of results">
+                        <div class="search-result-details" (click)="getPlayer(player)">
+                            <img [src]="player.imageUrl">
+                            <p>{{player.firstName}} {{player.surname}}</p>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div *ngIf="playerProfile$ | async as profile" class="player-profile-container">
+        <div class="player-img">
+            <h2>{{profile.playerDetails.firstName}} {{profile.playerDetails.surname}}</h2>
+            <img [src]="profile.playerDetails.imageUrl">
+        </div>
+        <div class="player-profile">
+            <div class="player-profile-stat">
+                <h2>Games Played</h2>
+                <h2>{{profile.gamesPlayed}}</h2>
+            </div>
+            <div class="player-profile-stat">
+                <h2>Total Minutes</h2>
+                <h2>{{profile.totalMinutes}} min</h2>
+            </div>
+            <div class="player-profile-stat">
+                <h2>Goals</h2>
+                <h2>{{profile.goals}}</h2>
+            </div>
+            <div class="player-profile-stat">
+                <h2>Assists</h2>
+                <h2>{{profile.assists}}</h2>
+            </div>
+            <!-- <div class="player-profile-stat">
+                <h2>Clean Sheets</h2>
+                <h2>{{profile.cleanSheets}}</h2>
+            </div> -->
+            <!-- <div class="player-profile-stat">
+                <h2>Goals Conceded</h2>
+                <h2>{{profile.gamesPlayed}}</h2>
+            </div> -->
+            <div class="player-profile-stat">
+                <h2>Own Goals</h2>
+                <h2>{{profile.ownGoals}}</h2>
+            </div>
+            <!-- <div class="player-profile-stat">
+                <h2>Penalties Saved</h2>
+                <h2>{{profile.penaltiesSaved}}</h2>
+            </div> -->
+            <div class="player-profile-stat">
+                <h2>Penalties Missed</h2>
+                <h2>{{profile.penaltiesMissed}}</h2>
+            </div>
+            <div class="player-profile-stat">
+                <h2>Yellow Cards</h2>
+                <h2>{{profile.yellowCards}}</h2>
+            </div>
+            <div class="player-profile-stat">
+                <h2>Red Cards</h2>
+                <h2>{{profile.redCards}}</h2>
+            </div>
+            <!-- <div class="player-profile-stat">
+                <h2>Saves</h2>
+                <h2>{{profile.saves}}</h2>
+            </div> -->
+        </div>
+    </div>
+</main>
+

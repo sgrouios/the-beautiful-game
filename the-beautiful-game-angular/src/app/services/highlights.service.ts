@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { catchError, map } from 'rxjs/operators';
 import { Highlight } from '../models/highlight';
@@ -11,6 +11,7 @@ import { Highlight } from '../models/highlight';
 export class HighlightsService {
 
   private readonly apiUrl = `${environment.apiUrl}/highlights`;
+  
   constructor(private http: HttpClient) { }
 
   getLatestHighlights(): Observable<Highlight[]> {
