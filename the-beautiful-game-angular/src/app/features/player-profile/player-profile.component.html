@@ -1,0 +1,103 @@
+<div *ngIf="playerProfile$ | async as profile">
+    <div class="player-profile-container" *ngIf="profile.playerDetails">
+        <div class="player-img">
+            <h2>{{profile.playerDetails.firstName}} {{profile.playerDetails.surname}}</h2>
+            <img [src]="profile.playerDetails.imageUrl">
+        </div>
+        <div class="top-stat-container">
+            <div class="top-stat">
+                <span class="title">Appearances</span>
+                <span class="stat">{{profile.gamesPlayed}}</span>
+            </div>
+            <div *ngIf="profile.playerDetails.position === outfieldPositions.Goalkeeper ||
+                        profile.playerDetails.position === outfieldPositions.Defender" class="top-stat">
+                <span class="title">Clean Sheets</span>
+                <span class="stat">{{profile.cleanSheets}}</span>
+            </div>
+            <div *ngIf="profile.playerDetails.position === outfieldPositions.Forward ||
+                        profile.playerDetails.position === outfieldPositions.Midfielder" class="top-stat">
+                <span class="title">Goals</span>
+                <span class="stat">{{profile.goals}}</span>
+            </div>
+            <div *ngIf="profile.playerDetails.position === outfieldPositions.Forward ||
+                        profile.playerDetails.position === outfieldPositions.Midfielder" class="top-stat">
+                <span class="title">Assists</span>
+                <span class="stat">{{profile.assists}}</span>
+            </div>
+            <div class="top-stat">
+                <span class="title">Minutes Played </span>
+                <span class="stat">{{profile.totalMinutes}}</span>
+            </div>
+        </div>
+        <div class="player-profile">
+            <div class="player-stat-section" *ngIf="profile.playerDetails.position === outfieldPositions.Goalkeeper">
+                <div class="player-stat-header">
+                    <h3>Goalkeeping</h3>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Clean Sheets</span>
+                    <span class="stat">{{profile.cleanSheets}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Goals Conceded</span>
+                    <span class="stat">{{profile.goalsConceded}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Penalties Saved</span>
+                    <span class="stat">{{profile.penaltiesSaved}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Saves</span>
+                    <span class="stat">{{profile.saves}}</span>
+                </div>
+            </div>
+            <div class="player-stat-section">
+                <div class="player-stat-header">
+                    <h3>Attack</h3>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Goals</span>
+                    <span class="stat">{{profile.goals}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Assists</span>
+                    <span class="stat">{{profile.assists}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Penalties Missed</span>
+                    <span class="stat">{{profile.penaltiesMissed}}</span>
+                </div>
+            </div>
+            <div class="player-stat-section">
+                <div class="player-stat-header">
+                    <h3>Defence</h3>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Clean Sheets</span>
+                    <span class="stat">{{profile.cleanSheets}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Goals Conceded</span>
+                    <span class="stat">{{profile.goalsConceded}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Own Goals</span>
+                    <span class="stat">{{profile.ownGoals}}</span>
+                </div>
+            </div>
+            <div class="player-stat-section">
+                <div class="player-stat-header">
+                    <h3>Discipline</h3>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Yellow Cards</span>
+                    <span class="stat">{{profile.yellowCards}}</span>
+                </div>
+                <div class="player-profile-stat">
+                    <span>Red Cards</span>
+                    <span class="stat">{{profile.redCards}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

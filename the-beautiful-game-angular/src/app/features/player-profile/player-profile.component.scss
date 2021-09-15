@@ -1,0 +1,100 @@
+@import '../../../styles.scss';
+
+.player-profile-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, red, blue);
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.player-img {
+    text-align: center;
+}
+
+.player-img img {
+    max-width: 300px;
+    height: auto;
+}
+
+.player-img h2 {
+    color: $highlight-text-col;
+}
+
+.top-stat-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto 0;
+    width: fit-content;
+    flex-wrap: wrap;
+}
+
+.top-stat {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    padding: 1rem 0.5rem;
+    color: $highlight-text-col;
+    min-width: 200px;
+}
+
+.top-stat .stat {
+    font-size: 25px;
+}
+
+.top-stat .title {
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.player-profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 1rem auto;
+    width: 100%;
+    color: $highlight-text-col;
+}
+
+.player-profile-stat {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    padding: 0.25rem 0;
+}
+
+.player-profile-stat .stat {
+    font-weight: 800;
+}
+
+.player-stat-section {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, red, blue);
+    width: 40%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.player-stat-header {
+    text-align: left;
+    padding: 0.5rem 0;
+}
+
+@media (max-width: 1000px) {
+    .player-profile {
+        flex-direction: column;
+    }
+    .player-stat-section {
+        margin: 0.25rem auto;
+        width: 80%;
+    }
+}

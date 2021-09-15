@@ -1,0 +1,22 @@
+<form [formGroup]="playerSearchForm" (keyup.enter)="submitSearch()">
+    <div class="player-search-container" >
+        <div class="player-search">
+            <input #searchInput class="player-search-input" type="text" formControlName="playerName" placeholder="Enter player name">
+            <span [style.visibility]="searchInput.value ? 'visible': 'hidden'" class="material-icons" (click)="clearSearchField()">cancel</span>
+        </div>
+        <div *ngIf="(playerResults$ | async) as results">
+            <div *ngIf="results.length !== 0" class="search-result-container">
+                <div class="search-result" *ngFor="let player of results">
+                    <div class="search-result-details" (click)="getPlayer(player)">
+                        <img [src]="player.imageUrl">
+                        <p>{{player.firstName}} {{player.surname}}</p>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div *ngIf="!(resultsFound$ | async)" class="no-results">
+    No results found.
+</div>
