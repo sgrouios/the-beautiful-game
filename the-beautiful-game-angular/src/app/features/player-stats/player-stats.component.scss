@@ -11,13 +11,25 @@ p {
     margin: 2rem auto;
     width: 90%;
     max-width: 400px;
-    height: 2rem;
+    height: 1.5rem;
     z-index: 10000;
     position: relative;
+    background: white;
+}
+
+.player-search-input {
+    border: none;
+    height: auto;
+    width: 100%;
+}
+
+.player-search-input:focus {
+    outline: none;
 }
 
 .player-search {
-    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .search-result-container {
@@ -25,8 +37,9 @@ p {
     flex-direction: column;
     padding: 0.5rem 0;
     background-color: white;
-    overflow: scroll;
     height: fit-content;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 .search-result-container hr {
@@ -36,6 +49,15 @@ p {
 .search-result {
     display: flex;
     flex-direction: column;
+}
+
+span.material-icons.close-btn {
+    cursor: pointer;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
 }
 
 .search-result img {
@@ -55,39 +77,112 @@ p {
 
 .player-profile-container {
     display: flex;
+    flex-direction: column;
     margin: 0 auto;
+    width: 90%;
+    border: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, red, blue);
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    justify-content: center;
 }
 
 .player-profile {
     display: flex;
-    text-align: center;
-    width: 60%;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
+    margin: 1rem auto;
+    width: 100%;
+    color: $highlight-text-col;
 }
 
 .player-profile-stat {
-    display: block;
-    width: 33%;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    padding: 0.25rem 0;
+}
+
+.player-profile-stat .stat {
+    font-weight: 800;
+}
+
+.player-stat-section {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(to left, red, blue);
+    width: 40%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.player-stat-header {
+    text-align: left;
+    padding: 0.5rem 0;
 }
 
 h2 {
     color: $highlight-text-col;
     text-align: center;
+    margin: 1rem 0;
 }
 
-@media (max-width: 600px) {
-    .player-profile-container {
-        flex-direction: column;
-    }
+h3 {
+    margin: 0;
+}
+
+.no-results {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.player-img {
+    text-align: center;
+}
+
+.player-img img {
+    max-width: 300px;
+    height: auto;
+}
+
+.top-stat-container {
+    display: flex;
+    justify-content: center;
+    margin: 1rem auto 0;
+    width: fit-content;
+}
+
+.top-stat {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid grey;
+    padding: 1rem 0.5rem;
+    color: $highlight-text-col;
+}
+
+.top-stat .stat {
+    font-size: 25px;
+}
+
+.top-stat .title {
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.close-btn {
+    position: relative;
+    top: 1;
+}
+
+@media (max-width: 1000px) {
     .player-profile {
         flex-direction: column;
-        width: 100%;
     }
-    .player-profile-stat {
-        width: 100%;
-    }
-    .player-img {
-        margin: 0 auto;
+    .player-stat-section {
+        margin: 0.25rem auto;
+        width: 80%;
     }
 }

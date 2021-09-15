@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -31,8 +32,9 @@ namespace the_beautiful_game_api.Services
             var response = await _httpClient.GetAsync("bootstrap-static/");
             var responseBody = await response.Content.ReadAsStringAsync();
             var playerResults = JsonConvert.DeserializeObject<FplPlayerSearchResults>(responseBody);
-            var findPlayer = playerResults.Elements.FindAll(x => x.Second_Name.ToLower().Contains(playerName.ToLower()));
-            foreach(FplPlayerResult player in findPlayer)
+            //var findPlayer = playerResults.Elements.FindAll(x => x.Second_Name.ToLower().Contains(playerName.ToLower()));
+            var findPlayer = playerResults.Elements.FindAll(x => String.Join(" ", x.First_Name.ToLower(), x.Second_Name.ToLower()).Contains(playerName.ToLower()));
+            foreach (FplPlayerResult player in findPlayer)
             {
                 player.ImageUrl = $"{_options.Value.ImageUrl}{player.Code}.png";
             }

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@ang
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { EMPTY, fromEvent, Observable, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
+import { FootballPosition } from 'src/app/models/football-position';
 import { PlayerProfile } from 'src/app/models/player-profile';
 import { PlayerSearch } from 'src/app/models/player-search-results';
 import { PlayerService } from 'src/app/services/player.service';
@@ -18,6 +19,8 @@ export class PlayerStatsComponent implements AfterViewInit, OnDestroy {
   playerSearchForm = this.initForm();
   searchEvent!: Observable<KeyboardEvent>;
   playerProfile$: Subject<PlayerProfile> = new Subject();
+  resultsFound$: Subject<boolean> = new Subject();
+  outfieldPositions = FootballPosition;
   destroy$: Subject<void> = new Subject();
 
   constructor(private playerService: PlayerService){}
@@ -43,6 +46,7 @@ export class PlayerStatsComponent implements AfterViewInit, OnDestroy {
     );
     this.searchEvent.subscribe();
     this.clearSearchResults();
+    this.resultsFound$.next(true);
   }
 
   initForm(): FormGroup {
@@ -52,7 +56,6 @@ export class PlayerStatsComponent implements AfterViewInit, OnDestroy {
   }
 
   submitSearch(): void {
-    console.log('submit search ran');
     if(this.playerSearchForm.valid){
       this.playerSearch()
       .subscribe();
@@ -68,7 +71,7 @@ export class PlayerStatsComponent implements AfterViewInit, OnDestroy {
       }),
       tap((results) => 
       {
-        this.playerResults$.next(results);
+        this.emitSearchResults(results);
       })
     );
   }
@@ -85,14 +88,25 @@ export class PlayerStatsComponent implements AfterViewInit, OnDestroy {
   }
 
   getPlayer(player: PlayerSearch): void {
-    this.playerSearchForm.reset();
-    this.playerResults$.next([]);
+    this.resetPlayerSearch();
     this.playerProfile(player).subscribe();
   }
 
   resetPlayerSearch(): void {
     this.playerSearchForm.reset();
     this.playerResults$.next([]);
+  }
+
+  emitSearchResults(searchResults: PlayerSearch[]): void {
+    this.playerResults$.next(searchResults);
+    if(searchResults.length === 0)
+      this.resultsFound$.next(false);
+    else
+      this.resultsFound$.next(true);
+  }
+
+  clearSearchField(): void {
+    this.resetPlayerSearch();
   }
 
   ngOnDestroy(): void {
