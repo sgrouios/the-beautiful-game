@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, EMPTY, Subject, fromEvent } from 'rxjs';
+import { Observable, EMPTY, Subject, fromEvent, BehaviorSubject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, takeUntil, tap } from 'rxjs/operators';
 import { PlayerSearch } from 'src/app/models/player-search-results';
 import { PlayerService } from 'src/app/services/player.service';
@@ -16,13 +16,18 @@ export class PlayerSearchComponent implements AfterViewInit, OnDestroy {
   searchEvent!: Observable<KeyboardEvent>;
   playerSearchForm = this.initForm();
   playerResults$: Subject<PlayerSearch[]> = new Subject();
-  resultsFound$: Subject<boolean> = new Subject();
+  resultsFound$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   @Output() emitPlayer: EventEmitter<PlayerSearch> = new EventEmitter();
   destroy$: Subject<void> = new Subject();
 
   constructor(private playerService: PlayerService){}
 
   ngAfterViewInit(): void {
+    this.searchEventSubscribe();
+    this.clearSearchResultsSubscribe();
+  }
+
+  searchEventSubscribe(): void {
     this.searchEvent = fromEvent<KeyboardEvent>(this.searchInput.nativeElement, 'keyup')
     .pipe(
       takeUntil(this.destroy$),
@@ -31,17 +36,15 @@ export class PlayerSearchComponent implements AfterViewInit, OnDestroy {
       tap(() => this.submitSearch())
     );
     this.searchEvent.subscribe();
-    this.clearSearchResults();
-    this.resultsFound$.next(true);
   }
 
-  clearSearchResults(): void {
+  clearSearchResultsSubscribe(): void {
     this.playerSearchForm.controls.playerName.valueChanges
     .pipe(
       takeUntil(this.destroy$),
       tap((name) => {
         if(name === '')
-          this.playerResults$.next([]);
+          this.resetPlayerSearch();
       })
     ).subscribe();
   }
@@ -54,13 +57,12 @@ export class PlayerSearchComponent implements AfterViewInit, OnDestroy {
 
   submitSearch(): void {
     if(this.playerSearchForm.valid){
-      this.playerSearch()
-      .subscribe();
+      this.playerSearch();
     }
   }
 
-  playerSearch(): Observable<PlayerSearch[]> {
-    return this.playerService.playerSearch(this.playerSearchForm.controls.playerName.value)
+  playerSearch(): void {
+    this.playerService.playerSearch(this.playerSearchForm.controls.playerName.value)
     .pipe(
       catchError((err) => {
         console.error(err);
@@ -70,7 +72,7 @@ export class PlayerSearchComponent implements AfterViewInit, OnDestroy {
       {
         this.emitSearchResults(results);
       })
-    );
+    ).subscribe();
   }
 
   emitSearchResults(searchResults: PlayerSearch[]): void {
@@ -85,10 +87,6 @@ export class PlayerSearchComponent implements AfterViewInit, OnDestroy {
     this.playerSearchForm.reset();
     this.playerResults$.next([]);
     this.resultsFound$.next(true);
-  }
-
-  clearSearchField(): void {
-    this.resetPlayerSearch();
   }
 
   getPlayer(player: PlayerSearch): void {

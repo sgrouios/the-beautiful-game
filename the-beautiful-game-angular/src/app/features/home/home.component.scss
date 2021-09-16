@@ -1,0 +1,14 @@
+@import '../../../styles.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem auto;
+    text-align: center;
+    width: 60%;
+}
+
+.container h1,
+.container h2{
+    color: $highlight-text-col;
+}

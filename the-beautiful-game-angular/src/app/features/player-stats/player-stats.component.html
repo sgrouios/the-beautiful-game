@@ -1,5 +1,5 @@
 <main>
-    <app-player-search (emitPlayer)="playerSearch($event)"></app-player-search>
-    <app-player-profile [playerSearch]="player$"></app-player-profile>
+    <app-player-search (emitPlayer)="profile.getPlayerProfile($event)"></app-player-search>
+    <app-player-profile #profile></app-player-profile>
 </main>
 

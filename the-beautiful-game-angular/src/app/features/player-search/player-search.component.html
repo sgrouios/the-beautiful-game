@@ -2,7 +2,7 @@
     <div class="player-search-container" >
         <div class="player-search">
             <input #searchInput class="player-search-input" type="text" formControlName="playerName" placeholder="Enter player name">
-            <span [style.visibility]="searchInput.value ? 'visible': 'hidden'" class="material-icons" (click)="clearSearchField()">cancel</span>
+            <span [style.visibility]="searchInput.value ? 'visible': 'hidden'" class="material-icons" (click)="resetPlayerSearch()">clear</span>
         </div>
         <div *ngIf="(playerResults$ | async) as results">
             <div *ngIf="results.length !== 0" class="search-result-container">
