@@ -1,8 +1,9 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 import { BehaviorSubject, EMPTY, Subject } from 'rxjs';
-import { catchError, take, tap } from 'rxjs/operators';
+import { catchError, finalize, take, tap } from 'rxjs/operators';
 import { Highlight } from 'src/app/models/highlight';
 import { HighlightsService } from 'src/app/services/highlights.service';
+import { LoadingService } from 'src/app/services/loading.service';
 @Component({
   selector: 'app-latest-highlights',
   templateUrl: './latest-highlights.component.html',
@@ -17,9 +18,15 @@ export class LatestHighlightsComponent implements AfterViewInit {
   dateSelected!: Date;
   allSelected = true;
 
-  constructor(private highLightsService: HighlightsService) { }
+  constructor(private highLightsService: HighlightsService,
+              private loadingService: LoadingService) { }
   
   ngAfterViewInit(): void {
+    this.getLatestHighlights();
+  }
+
+  getLatestHighlights(): void {
+    this.loadingService.setLoading(true);
     this.highLightsService.getLatestHighlights()
     .pipe(
       catchError((err) => {
@@ -33,10 +40,10 @@ export class LatestHighlightsComponent implements AfterViewInit {
         this.dates$.next(this.getHighlightDates(this.allHighlights));
         // emit all highlights retrieved - default
         this.latestHighlightsSelected$.next(this.allHighlights);
-      })
+      }),
+      finalize(() => this.loadingService.setLoading(false))
     ).subscribe();
   }
-
   /**
    * Accepts array of highlights - 'highlights' and adds each unique date property to a new array
    * @param  {Highlight[]} highlights

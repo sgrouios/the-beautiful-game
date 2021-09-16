@@ -1,0 +1,19 @@
+.loading {
+    background-color: black;
+    opacity: 50%;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+
+.image-container {
+    width: 80px;
+    margin: 0 auto;
+    position: relative;
+    top: 35%;
+}
+
+img {
+    height: 5rem;
+}
