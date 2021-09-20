@@ -44,6 +44,7 @@ export class LatestHighlightsComponent implements AfterViewInit {
       finalize(() => this.loadingService.setLoading(false))
     ).subscribe();
   }
+  
   /**
    * Accepts array of highlights - 'highlights' and adds each unique date property to a new array
    * @param  {Highlight[]} highlights
