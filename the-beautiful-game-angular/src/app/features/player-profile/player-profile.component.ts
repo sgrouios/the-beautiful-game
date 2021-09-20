@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable, EMPTY, Subject, Subscription } from 'rxjs';
-import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { EMPTY, Subject } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { FootballPosition } from 'src/app/models/football-position';
 import { PlayerProfile } from 'src/app/models/player-profile';
 import { PlayerSearch } from 'src/app/models/player-search-results';

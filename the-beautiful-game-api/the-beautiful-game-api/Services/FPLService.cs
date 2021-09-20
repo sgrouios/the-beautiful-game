@@ -29,28 +29,42 @@ namespace the_beautiful_game_api.Services
 
         public async Task<IActionResult> GetPlayerSearchResults(string playerName)
         {
-            var response = await _httpClient.GetAsync("bootstrap-static/");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var playerResults = JsonConvert.DeserializeObject<FplPlayerSearchResults>(responseBody);
-            //var findPlayer = playerResults.Elements.FindAll(x => x.Second_Name.ToLower().Contains(playerName.ToLower()));
-            var findPlayer = playerResults.Elements.FindAll(x => String.Join(" ", x.First_Name.ToLower(), x.Second_Name.ToLower()).Contains(playerName.ToLower()));
-            foreach (FplPlayerResult player in findPlayer)
+            try
             {
-                player.ImageUrl = $"{_options.Value.ImageUrl}{player.Code}.png";
+                var response = await _httpClient.GetAsync("bootstrap-static/");
+                response.EnsureSuccessStatusCode();
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var playerResults = JsonConvert.DeserializeObject<FplPlayerSearchResults>(responseBody);
+                var findPlayer = playerResults.Elements.FindAll(x => String.Join(" ", x.First_Name.ToLower(), x.Second_Name.ToLower()).Contains(playerName.ToLower()));
+                foreach (FplPlayerResult player in findPlayer)
+                {
+                    player.ImageUrl = $"{_options.Value.ImageUrl}{player.Code}.png";
+                }
+                var mapPlayer = _mapper.Map<List<PlayerResult>>(findPlayer);
+                return new OkObjectResult(mapPlayer);
             }
-            var mapPlayer = _mapper.Map<List<PlayerResult>>(findPlayer);
-            return new OkObjectResult(mapPlayer);
+            catch
+            {
+                return new StatusCodeResult(500);
+            }
         }
 
         public async Task<IActionResult> GetPlayerProfile(PlayerResult playerDetails)
         {
-            var response = await _httpClient.GetAsync($"element-summary/{playerDetails.Id}/");
-            var responseBody = await response.Content.ReadAsStringAsync();
-            var playerStats = JsonConvert.DeserializeObject<FplPlayerSeason>(responseBody);
-            var mappedPlayer = _mapper.Map<PlayerProfile>(playerStats);
-            mappedPlayer.PlayerDetails = playerDetails;
-            return new OkObjectResult(mappedPlayer);
-
+            try
+            {
+                var response = await _httpClient.GetAsync($"element-summary/{playerDetails.Id}/");
+                response.EnsureSuccessStatusCode();
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var playerStats = JsonConvert.DeserializeObject<FplPlayerSeason>(responseBody);
+                var mappedPlayer = _mapper.Map<PlayerProfile>(playerStats);
+                mappedPlayer.PlayerDetails = playerDetails;
+                return new OkObjectResult(mappedPlayer);
+            }
+            catch
+            {
+                return new StatusCodeResult(500);
+            }
         }
     }
 }
