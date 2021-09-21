@@ -52,3 +52,39 @@
     box-shadow: inset 0 0 0 2em $highlight-text-col;
     color: $site-background-col;
 }
+
+.search-btn-container {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    margin: 2rem auto;
+    border-radius: 10px;
+    border: 3px solid $highlight-text-col;
+    background: $site-background-col;
+}
+
+.search-filter-lbl {
+    display: flex;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: $highlight-text-col;
+    height: 100%;
+    align-items: center;
+    padding: 0.5rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input[type="radio"] {
+    appearance: none;
+    display: none;
+}
+
+input[type=radio]:checked + label {
+    background: $highlight-text-col;
+    color: $site-background-col;
+}

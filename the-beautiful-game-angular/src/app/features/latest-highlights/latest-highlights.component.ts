@@ -77,4 +77,8 @@ export class LatestHighlightsComponent implements AfterViewInit {
     this.dateSelected = date;
     this.latestHighlightsSelected$.next(this.allHighlights.filter(x => x.date.toDateString() === date.toDateString()));
   }
+
+  log(): void {
+    console.log('logged');
+  }
 }

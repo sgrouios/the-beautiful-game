@@ -1,4 +1,10 @@
 <main>
+    <div class="search-btn-container">
+        <input type="radio" id="dates" name="search-filter" checked>
+        <label class="search-filter-lbl dates-lbl" for="dates">Dates</label>
+        <input type="radio" id="teams" name="search-filter">
+        <label class="search-filter-lbl teams-lbl" for="teams">Teams</label>
+    </div>
     <div *ngIf="dates$ | async as dates" class="date-filter-container">
         <div class="date-filter-btn-container">
             <button class="date-filter-btn" [ngClass]="{ 'date-selected': allSelected }" (click)="selectAllHighlights()">All</button>
