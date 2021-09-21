@@ -1,16 +1,25 @@
 <main>
     <div class="search-btn-container">
-        <input type="radio" id="dates" name="search-filter" checked>
-        <label class="search-filter-lbl dates-lbl" for="dates">Dates</label>
-        <input type="radio" id="teams" name="search-filter">
-        <label class="search-filter-lbl teams-lbl" for="teams">Teams</label>
+        <input type="radio" id="all" name="search-filter"  (click)="changeFilter('all')" checked>
+        <label class="search-filter-lbl" for="all">All</label>
+        <input type="radio" id="dates" name="search-filter" (click)="changeFilter('date')">
+        <label class="search-filter-lbl" for="dates">Dates</label>
+        <input type="radio" id="teams" name="search-filter" (click)="changeFilter('team')">
+        <label class="search-filter-lbl" for="teams">Teams</label>
     </div>
-    <div *ngIf="dates$ | async as dates" class="date-filter-container">
-        <div class="date-filter-btn-container">
-            <button class="date-filter-btn" [ngClass]="{ 'date-selected': allSelected }" (click)="selectAllHighlights()">All</button>
+    <div *ngIf="dates$ | async as dates">
+        <div *ngIf="(searchFilter$ | async) === 'date'" class="date-filter-container">
+            <div *ngFor="let date of dates" class="date-filter-btn-container">
+                <button class="date-filter-btn" [ngClass]="{ 'date-selected': date === dateSelected }" (click)="selectDate(date)">{{date | date:'LLL d'}}</button>
+            </div>
         </div>
-        <div *ngFor="let date of dates" class="date-filter-btn-container">
-            <button class="date-filter-btn" [ngClass]="{ 'date-selected': date === dateSelected }" (click)="selectDate(date)">{{date | date:'LLL d'}}</button>
+    </div>
+    <div *ngIf="teams$ | async as teams">
+        <div *ngIf="(searchFilter$ | async) === 'team'" class="team-filter-container">
+            <select #teamSelected (change)="teamHighlights(teamSelected.value)">
+                <option hidden disabled selected>Select a team</option>
+                <option *ngFor="let team of teams" [value]="team">{{team}}</option>
+            </select>
         </div>
     </div>
     <div *ngIf="latestHighlightsSelected$ | async as highlights">

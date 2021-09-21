@@ -17,6 +17,9 @@ export class LatestHighlightsComponent implements AfterViewInit {
   dates$: Subject<Date[]> = new Subject();
   dateSelected!: Date;
   allSelected = true;
+  searchFilterSubject$ = new BehaviorSubject('all');
+  searchFilter$ = this.searchFilterSubject$.asObservable();
+  teams$: Subject<string[]> = new Subject();
 
   constructor(private highLightsService: HighlightsService,
               private loadingService: LoadingService) { }
@@ -38,6 +41,7 @@ export class LatestHighlightsComponent implements AfterViewInit {
         this.allHighlights = highlights;
         // get all dates by month/day to display
         this.dates$.next(this.getHighlightDates(this.allHighlights));
+        this.teams$.next(this.getHighlightTeams(highlights));
         // emit all highlights retrieved - default
         this.latestHighlightsSelected$.next(this.allHighlights);
       }),
@@ -59,6 +63,18 @@ export class LatestHighlightsComponent implements AfterViewInit {
     return dates;
   }
 
+  getHighlightTeams(highlights: Highlight[]): string[] {
+    const teams: string[] = [];
+    highlights.forEach(hl => {
+      const highlightTeams = hl.title.split(' - ');
+      highlightTeams.forEach(team => {
+        if(!teams.includes(team))
+          teams.push(team);
+      })
+    });
+    return teams.sort();
+  }
+
   selectAllHighlights(): void {
     this.latestHighlightsSelected$
     .pipe(
@@ -78,7 +94,13 @@ export class LatestHighlightsComponent implements AfterViewInit {
     this.latestHighlightsSelected$.next(this.allHighlights.filter(x => x.date.toDateString() === date.toDateString()));
   }
 
-  log(): void {
-    console.log('logged');
+  changeFilter(filter: string): void {
+    this.searchFilterSubject$.next(filter);
+    if(filter === 'all')
+      this.selectAllHighlights();
+  }
+
+  teamHighlights(team: string): void {
+    this.latestHighlightsSelected$.next(this.allHighlights.filter(x => x.title.includes(team)));
   }
 }
