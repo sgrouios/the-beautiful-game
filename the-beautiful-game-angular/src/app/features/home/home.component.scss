@@ -3,12 +3,39 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin: 2rem auto;
     text-align: center;
-    width: 60%;
+    position: relative;
 }
 
 .container h1,
 .container h2{
     color: $highlight-text-col;
+}
+
+.btn-container {
+    position: absolute;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%, -85%);
+    -ms-transform: translate(-50%, -85%);
+}
+
+.btn-container button {
+    background: $highlight-text-col;
+    margin: 0 0.5rem;
+    width: 10rem;
+    height: 4rem;
+    color: $site-background-col;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border: 4px $site-background-col solid;
+    cursor: pointer;
+}
+
+.btn-container button:hover,
+.btn-container button:focus {
+    background: $site-background-col;
+    color: $highlight-text-col;
+    border-color: $highlight-text-col;
 }

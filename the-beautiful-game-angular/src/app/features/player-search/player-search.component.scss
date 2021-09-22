@@ -31,15 +31,26 @@ h3 {
     display: flex;
     justify-content: center;
     height: inherit;
+    background: $site-background-col;
+    border-bottom: 2px #5ea6c0 solid;
+    padding-bottom: 0.25rem;
 }
 
 .player-search-input {
     border: none;
     width: 100%;
+    background: $site-background-col;
+    color: #5ea6c0;
+    text-align: center;
+    font-size: 1rem;
 }
 
 .player-search-input:focus {
     outline: none;
+}
+
+::placeholder {
+    color: rgb(192, 192, 192);;
 }
 
 .search-result-container {
@@ -50,10 +61,18 @@ h3 {
     height: fit-content;
     max-height: 50vh;
     overflow-y: auto;
+    background: $site-background-col;
+    font-weight: bold;
+    font-size: 1.25rem;
+    font-family: 'Nunito', sans-serif;
+    color: $highlight-text-col;
+    border: 2px solid #5ea6c0;
+    text-align: center;
 }
 
 .search-result-container hr {
     width: 90%;
+    border-color: #5ea6c0;
 }
 
 .search-result {
@@ -78,6 +97,7 @@ h3 {
 
 span.material-icons {
     cursor: pointer;
+    color: #5ea6c0;
 }
 
 .no-results {
